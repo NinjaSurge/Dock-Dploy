@@ -1,0 +1,12 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow API and backend routes
+Disallow: /api/
+Disallow: /backend/
+Disallow: /src/
+
+# Allow main pages
+Allow: /
+Allow: /docker/compose-builder
