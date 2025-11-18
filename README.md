@@ -1,12 +1,23 @@
-#  Dock-Dploy
+<div align="center">
+    <h1 align="center"><a href="https://github.com/hhftechnology/Dock-Dploy">Dock-Dploy</a></h1>
+</div>
 
-**A web-based tool for building, managing, and converting Docker Compose files, configuration files, and schedulers.**
+A web-based tool for building, managing, and converting Docker Compose files, configuration files, and schedulers.
 
+<div align="center">
+    
+[![Docker](https://img.shields.io/docker/pulls/hhftechnology/Dock-Dploy?style=flat-square)](https://hub.docker.com/r/hhftechnology/Dock-Dploy)
+![Stars](https://img.shields.io/github/stars/hhftechnology/Dock-Dploy?style=flat-square)
+[![Discord](https://img.shields.io/discord/994247717368909884?logo=discord&style=flat-square)](https://discord.gg/HDCt9MjyMJ)
 [![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.1-646cff.svg)](https://vitejs.dev/)
 
----
+</div>
+
+<img width="1735" height="2354" alt="image" src="https://github.com/user-attachments/assets/2f06bbe1-8161-4263-a030-f9cd258ee372" />
+<img width="1735" height="817" alt="image" src="https://github.com/user-attachments/assets/615c49e8-181f-4be8-8c07-aebc7aa2fb29" />
+
 
 ##  Table of Contents
 
