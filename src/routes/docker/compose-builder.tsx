@@ -733,7 +733,7 @@ function App() {
     }
   }
 
-  // Fetch template details (compose, template.toml, logo)
+  // Fetch template details (compose, logo)
   async function fetchTemplateDetails(templateId: string): Promise<any> {
     const GITHUB_OWNER = "hhftechnology";
     const GITHUB_REPO = "Marketplace";
@@ -758,23 +758,6 @@ function App() {
       }
       const composeContent = await composeResponse.text();
 
-      // Fetch template.toml
-      let templateTomlContent = null;
-      let parsedTemplate = null;
-      try {
-        const tomlUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${basePath}/template.toml`;
-        const tomlResponse = await fetch(tomlUrl);
-        if (tomlResponse.ok) {
-          templateTomlContent = await tomlResponse.text();
-          const { parseTemplateToml } = await import(
-            "../../utils/template-parser"
-          );
-          parsedTemplate = parseTemplateToml(templateTomlContent);
-        }
-      } catch (e) {
-        console.warn(`Template ${templateId} has no template.toml file`);
-      }
-
       // Build logo URL if logo exists
       let logoUrl = null;
       if (template.logo) {
@@ -784,8 +767,6 @@ function App() {
       return {
         ...template,
         composeContent,
-        templateTomlContent,
-        parsedTemplate,
         logoUrl,
       };
     } catch (error: any) {
@@ -1222,86 +1203,6 @@ function App() {
           doc.networks || {},
           doc.volumes || {}
         );
-      }
-
-      // Apply template.toml configuration if available
-      if (template.parsedTemplate) {
-        const parsed = template.parsedTemplate;
-
-        // Apply environment variables from template.toml
-        if (parsed.env && parsed.env.length > 0) {
-          setServices((prev) => {
-            return prev.map((svc) => {
-              // Find matching service by name from domains config
-              const domainConfig = parsed.domains?.find(
-                (d: any) => d.serviceName === svc.name
-              );
-
-              if (domainConfig && domainConfig.env) {
-                // Merge domain-specific env vars
-                const domainEnv = domainConfig.env.map((e: string) => {
-                  const [key, ...rest] = e.split("=");
-                  return { key: key.trim(), value: rest.join("=").trim() };
-                });
-
-                // Merge with existing env vars, avoiding duplicates
-                const existingKeys = new Set(svc.environment.map((e) => e.key));
-                const newEnv = domainEnv.filter(
-                  (e: { key: string; value: string }) =>
-                    !existingKeys.has(e.key)
-                );
-                return {
-                  ...svc,
-                  environment: [...svc.environment, ...newEnv],
-                };
-              }
-
-              // Apply general env vars if no domain-specific config
-              const existingKeys = new Set(svc.environment.map((e) => e.key));
-              const newEnv = parsed.env.filter(
-                (e: any) => !existingKeys.has(e.key)
-              );
-              return {
-                ...svc,
-                environment: [...svc.environment, ...newEnv],
-              };
-            });
-          });
-        }
-
-        // Apply domains configuration (ports, etc.)
-        if (parsed.domains && parsed.domains.length > 0) {
-          setServices((prev) => {
-            return prev.map((svc) => {
-              const domainConfig = parsed.domains?.find(
-                (d: any) => d.serviceName === svc.name
-              );
-
-              if (domainConfig) {
-                // Add port if not already present
-                const hasPort = svc.ports.some(
-                  (p) => p.container === String(domainConfig.port)
-                );
-
-                if (!hasPort && domainConfig.port) {
-                  return {
-                    ...svc,
-                    ports: [
-                      ...svc.ports,
-                      {
-                        host: "",
-                        container: String(domainConfig.port),
-                        protocol: "none",
-                      },
-                    ],
-                  };
-                }
-              }
-
-              return svc;
-            });
-          });
-        }
       }
 
       // Close dialogs
