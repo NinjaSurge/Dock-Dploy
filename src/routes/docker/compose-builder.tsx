@@ -1334,12 +1334,12 @@ function App() {
                     <div className="mb-4 text-xs text-muted-foreground">
                       Templates from{" "}
                       <a
-                        href="https://github.com/hhftechnology/Marketplace"
+                        href="https://gitea.computersurge.dev/ComputerSurge/dock-dploy-Marketplace"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-primary hover:underline"
                       >
-                        hhftechnology/Marketplace
+                        ComputerSurge/dock-dploy-Marketplace
                       </a>{" "}
                       repository.
                     </div>
