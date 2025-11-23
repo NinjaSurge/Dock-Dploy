@@ -696,14 +696,14 @@ function App() {
       setTemplateError(null);
     }
 
-    const GITHUB_OWNER = "hhftechnology";
-    const GITHUB_REPO = "Marketplace";
+    const GITHUB_OWNER = "ComputerSurge";
+    const GITHUB_REPO = "dock-dploy-Marketplace";
     const GITHUB_BRANCH = "main";
-    const GITHUB_RAW_BASE = "https://raw.githubusercontent.com";
+    const GITHUB_RAW_BASE = "https://gitea.computersurge.dev";
 
     try {
       // Fetch meta.json
-      const metaUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/meta.json`;
+      const metaUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/raw/branch/${GITHUB_BRANCH}/meta.json`; // URL format is for gitea
       const metaResponse = await fetch(metaUrl);
 
       if (!metaResponse.ok) {
@@ -735,10 +735,10 @@ function App() {
 
   // Fetch template details (compose, logo)
   async function fetchTemplateDetails(templateId: string): Promise<any> {
-    const GITHUB_OWNER = "hhftechnology";
-    const GITHUB_REPO = "Marketplace";
+    const GITHUB_OWNER = "ComputerSurge";
+    const GITHUB_REPO = "dock-dploy-Marketplace";
     const GITHUB_BRANCH = "main";
-    const GITHUB_RAW_BASE = "https://raw.githubusercontent.com";
+    const GITHUB_RAW_BASE = "https://gitea.computersurge.dev";
 
     const template = templates.find((t) => t.id === templateId);
     if (!template) {
@@ -749,7 +749,7 @@ function App() {
       const basePath = `compose-files/${templateId}`;
 
       // Fetch docker-compose.yml
-      const composeUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${basePath}/docker-compose.yml`;
+      const composeUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/raw/branch/${GITHUB_BRANCH}/${basePath}/docker-compose.yml`; // URL format is for gitea
       const composeResponse = await fetch(composeUrl);
       if (!composeResponse.ok) {
         throw new Error(
@@ -761,7 +761,7 @@ function App() {
       // Build logo URL if logo exists
       let logoUrl = null;
       if (template.logo) {
-        logoUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${basePath}/${template.logo}`;
+        logoUrl = `${GITHUB_RAW_BASE}/${GITHUB_OWNER}/${GITHUB_REPO}/raw/branch/${GITHUB_BRANCH}/${basePath}/${template.logo}`;
       }
 
       return {
