@@ -186,10 +186,20 @@ export function generateYaml(
       working_dir: svc.working_dir || undefined,
       labels:
         svc.labels && svc.labels.filter((l) => l.key).length
-          ? svc.labels
+          ? svc.labels_syntax === "dict"
+            ? svc.labels
+              .filter(({ key }) => key)
+              .reduce(
+                (acc, { key, value }) => {
+                  acc[key] = value;
+                  return acc;
+                },
+                {} as Record<string, string>
+              )
+            : svc.labels
               .filter((l) => l.key)
-              .map(({ key, value }) => `"${key}=${value}"`)
-          : undefined,
+              .map(({ key, value}) => `"${key}=${value}"`)
+          :undefined,
       privileged: svc.privileged !== undefined ? svc.privileged : undefined,
       read_only: svc.read_only !== undefined ? svc.read_only : undefined,
       shm_size: svc.shm_size || undefined,

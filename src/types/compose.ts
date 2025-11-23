@@ -58,6 +58,7 @@ export interface ServiceConfig {
   user?: string;
   working_dir?: string;
   labels?: { key: string; value: string }[];
+  labels_syntax?: "array" | "dict";
   privileged?: boolean;
   read_only?: boolean;
   shm_size?: string;
