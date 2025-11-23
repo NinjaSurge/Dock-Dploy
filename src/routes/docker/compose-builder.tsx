@@ -933,16 +933,19 @@ function App() {
           : [],
       user: actualServiceData.user || "",
       working_dir: actualServiceData.working_dir || "",
-      labels: actualServiceData.labels
-        ? Array.isArray(actualServiceData.labels)
-          ? actualServiceData.labels.map((l: string) => {
-              const [key, ...rest] = l.split("=");
-              return { key, value: rest.join("=") };
-            })
-          : Object.entries(actualServiceData.labels).map(
+      labels: Array.isArray(actualServiceData.labels)
+        ? actualServiceData.labels.map((l: string) => {
+            const [key, ...rest] = l.split("=");
+            return { key, value: rest.join("=") };
+          })
+        : actualServiceData.labels && typeof actualServiceData.labels === "object"
+          ? Object.entries(actualServiceData.labels).map(
               ([key, value]: [string, any]) => ({ key, value: String(value) })
             )
-        : [],
+          : [],
+      labels_syntax: Array.isArray(actualServiceData.labels)
+        ? "array"
+        : "dict",
       privileged:
         actualServiceData.privileged !== undefined
           ? !!actualServiceData.privileged
@@ -3274,7 +3277,42 @@ function App() {
                         </div>
                         {/* Labels */}
                         <div>
-                          <Label className="mb-1 block">Labels</Label>
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-2">
+                              <Label className="mb-1 block">Labels</Label>
+                            </div>
+                            <div className="flex gap-2 items-center">
+                              <span className="text-xs text-muted-foreground">
+                                Syntax:
+                              </span>
+                              <Toggle
+                                pressed={svc.labels_syntax === "array"}
+                                onPressedChange={(pressed) =>
+                                  updateServiceField(
+                                    "labels_syntax",
+                                    pressed ? "array" : "dict"
+                                  )
+                                }
+                                aria-label="Array syntax"
+                                className="border rounded px-2 py-1 text-xs"
+                              >
+                                Array
+                              </Toggle>
+                              <Toggle
+                                pressed={svc.labels_syntax === "dict"}
+                                onPressedChange={(pressed) =>
+                                  updateServiceField(
+                                    "labels_syntax",
+                                    pressed ? "dict" : "array"
+                                  )
+                                }
+                                aria-label="Dictionary syntax"
+                                className="border rounded px-2 py-1 text-xs"
+                              >
+                                Dict
+                              </Toggle>
+                            </div>
+                          </div>
                           <div className="flex flex-col gap-2">
                             {svc.labels?.map((label, idx) => (
                               <div

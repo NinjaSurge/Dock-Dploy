@@ -115,6 +115,7 @@ export function defaultService(): ServiceConfig {
     user: "",
     working_dir: "",
     labels: [],
+    labels_syntax: "array",
     privileged: undefined,
     read_only: undefined,
     shm_size: "",
