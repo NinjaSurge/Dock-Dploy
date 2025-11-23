@@ -1405,7 +1405,7 @@ function App() {
                                   <div className="w-full flex items-start gap-3">
                                     {template.logo ? (
                                       <img
-                                        src={`https://raw.githubusercontent.com/Dokploy/templates/main/blueprints/${template.id}/${template.logo}`}
+                                        src={`https://gitea.computersurge.dev/ComputerSurge/dockploy-templates/raw/branch/main/blueprints/${template.id}/${template.logo}`}
                                         alt={template.name}
                                         className="w-12 h-12 object-contain flex-shrink-0"
                                         onError={(
