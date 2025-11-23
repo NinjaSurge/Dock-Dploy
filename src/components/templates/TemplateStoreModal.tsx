@@ -70,7 +70,7 @@ export function TemplateStoreModal({
                 <span>
                   Templates from{" "}
                   <a
-                    href="https://github.com/Dokploy/templates"
+                    href="https://gitea.computersurge.dev/ComputerSurge/dockploy-templates"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary hover:underline"
@@ -165,7 +165,7 @@ export function TemplateStoreModal({
                   {...template}
                   logo={
                     template.logo
-                      ? `https://raw.githubusercontent.com/Dokploy/templates/main/blueprints/${template.id}/${template.logo}`
+                      ? `https://gitea.computersurge.dev/ComputerSurge/dockploy-templates/raw/branch/main/blueprints/${template.id}/${template.logo}`
                       : undefined
                   }
                   onClick={() => onTemplateSelect(template)}
